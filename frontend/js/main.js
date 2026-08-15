@@ -94,38 +94,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (mobileMenu && navMenu) {
 
-        mobileMenu.addEventListener(
-            "click",
-            function (event) {
+        mobileMenu.addEventListener("click", (event) => {
 
-                event.preventDefault();
-                event.stopPropagation();
+            event.preventDefault();
+            event.stopPropagation();
 
-                const isOpen =
-                    navMenu.classList.contains("active");
+            const isOpen =
+                navMenu.classList.contains("active");
 
-                if (isOpen) {
+            navMenu.classList.toggle("active", !isOpen);
+            mobileMenu.classList.toggle("active", !isOpen);
 
-                    navMenu.classList.remove("active");
-                    mobileMenu.classList.remove("active");
-
-                    mobileMenu.setAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
-
-                } else {
-
-                    navMenu.classList.add("active");
-                    mobileMenu.classList.add("active");
-
-                    mobileMenu.setAttribute(
-                        "aria-expanded",
-                        "true"
-                    );
-                }
-            }
-        );
+            mobileMenu.setAttribute(
+                "aria-expanded",
+                String(!isOpen)
+            );
+        });
 
 
         navMenu.querySelectorAll("a").forEach((link) => {
@@ -160,7 +144,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     "false"
                 );
             }
-
         });
     }
 
@@ -357,7 +340,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         return checkIn
-            ? checkIn.value.trim()
+            ? String(checkIn.value || "").trim()
             : "";
     }
 
@@ -376,7 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         return checkOut
-            ? checkOut.value.trim()
+            ? String(checkOut.value || "").trim()
             : "";
     }
 
@@ -412,10 +395,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        /*
-         * Remove focus from a button inside the modal
-         * before aria-hidden becomes true.
-         */
         if (
             document.activeElement &&
             modal.contains(document.activeElement)
@@ -435,29 +414,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       CREATE RESERVATION OBJECT
+       BUILD RESERVATION
     ===================================================== */
 
     function buildReservationFromForm() {
 
         const guestNameValue =
             fullName
-                ? fullName.value.trim()
+                ? String(fullName.value || "").trim()
                 : "";
 
         const phoneValue =
             phone
-                ? phone.value.trim()
+                ? String(phone.value || "").trim()
                 : "";
 
         const roomValue =
             roomType
-                ? roomType.value.trim()
+                ? String(roomType.value || "").trim()
                 : "";
 
         const guestsValue =
             guestCount
-                ? guestCount.value.trim()
+                ? String(guestCount.value || "").trim()
                 : "";
 
         const checkInValue =
@@ -465,6 +444,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const checkOutValue =
             getCheckOutValue();
+
+
+        const parsedGuestCount =
+            Number(guestsValue);
 
 
         if (
@@ -475,20 +458,14 @@ document.addEventListener("DOMContentLoaded", () => {
             !checkInValue ||
             !checkOutValue
         ) {
-
             return null;
         }
-
-
-        const parsedGuestCount =
-            Number(guestsValue);
 
 
         if (
             !Number.isInteger(parsedGuestCount) ||
             parsedGuestCount < 1
         ) {
-
             return null;
         }
 
@@ -532,17 +509,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 event.preventDefault();
 
 
-                /* -----------------------------------------
-                   CREATE RESERVATION
-                ----------------------------------------- */
-
                 const reservation =
                     buildReservationFromForm();
 
-
-                /* -----------------------------------------
-                   VALIDATION
-                ----------------------------------------- */
 
                 if (!reservation) {
 
@@ -571,7 +540,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     const endDate =
                         checkOutPicker.selectedDates[0];
 
-
                     if (endDate <= startDate) {
 
                         alert(
@@ -584,11 +552,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 /* -----------------------------------------
-                   SAVE CURRENT RESERVATION
+                   SAVE RESERVATION
                 ----------------------------------------- */
 
-                currentReservation =
-                    reservation;
+                currentReservation = {
+                    guestName: reservation.guestName,
+                    phone: reservation.phone,
+                    roomType: reservation.roomType,
+                    guestCount: reservation.guestCount,
+                    checkIn: reservation.checkIn,
+                    checkOut: reservation.checkOut,
+                    specialRequest: ""
+                };
 
 
                 /* -----------------------------------------
@@ -596,44 +571,38 @@ document.addEventListener("DOMContentLoaded", () => {
                 ----------------------------------------- */
 
                 if (summaryName) {
-
                     summaryName.textContent =
                         currentReservation.guestName;
                 }
 
                 if (summaryPhone) {
-
                     summaryPhone.textContent =
                         currentReservation.phone;
                 }
 
                 if (summaryRoom) {
-
                     summaryRoom.textContent =
                         currentReservation.roomType;
                 }
 
                 if (summaryGuests) {
-
                     summaryGuests.textContent =
                         `${currentReservation.guestCount} qonaq`;
                 }
 
                 if (summaryCheckIn) {
-
                     summaryCheckIn.textContent =
                         currentReservation.checkIn;
                 }
 
                 if (summaryCheckOut) {
-
                     summaryCheckOut.textContent =
                         currentReservation.checkOut;
                 }
 
 
                 /* -----------------------------------------
-                   OPEN CONFIRMATION MODAL
+                   OPEN CONFIRMATION
                 ----------------------------------------- */
 
                 openModal(
@@ -653,10 +622,7 @@ document.addEventListener("DOMContentLoaded", () => {
         closeReservationModal.addEventListener(
             "click",
             () => {
-
-                closeModal(
-                    reservationModal
-                );
+                closeModal(reservationModal);
             }
         );
     }
@@ -667,10 +633,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cancelReservation.addEventListener(
             "click",
             () => {
-
-                closeModal(
-                    reservationModal
-                );
+                closeModal(reservationModal);
             }
         );
     }
@@ -691,7 +654,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 /* -----------------------------------------
-                   FINAL VALIDATION
+                   CHECK CURRENT RESERVATION
                 ----------------------------------------- */
 
                 if (!currentReservation) {
@@ -705,7 +668,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 /* -----------------------------------------
-                   CREATE CLEAN PAYLOAD
+                   CLEAN PAYLOAD
                 ----------------------------------------- */
 
                 const reservationPayload = {
@@ -748,20 +711,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 /* -----------------------------------------
-                   FINAL CLIENT VALIDATION
+                   VALIDATION
                 ----------------------------------------- */
 
                 if (
                     !reservationPayload.guestName ||
                     !reservationPayload.phone ||
                     !reservationPayload.roomType ||
-                    !reservationPayload.guestCount ||
+                    !Number.isInteger(
+                        reservationPayload.guestCount
+                    ) ||
+                    reservationPayload.guestCount < 1 ||
                     !reservationPayload.checkIn ||
                     !reservationPayload.checkOut
                 ) {
 
                     console.error(
-                        "Invalid reservation payload:",
+                        "INVALID RESERVATION PAYLOAD:",
                         reservationPayload
                     );
 
@@ -789,11 +755,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 /* -----------------------------------------
-                   BUTTON STATE
+                   BUTTON
                 ----------------------------------------- */
 
-                confirmReservation.disabled =
-                    true;
+                confirmReservation.disabled = true;
 
                 const oldText =
                     confirmReservation.textContent;
@@ -805,7 +770,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 try {
 
                     /* -------------------------------------
-                       SEND TO BACKEND
+                       SEND
                     ------------------------------------- */
 
                     const response =
@@ -831,14 +796,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                     /* -------------------------------------
-                       READ RESPONSE
+                       RESPONSE
                     ------------------------------------- */
 
                     let data = {};
 
                     const responseText =
                         await response.text();
-
 
                     if (responseText) {
 
@@ -849,10 +813,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                     responseText
                                 );
 
-                        } catch (parseError) {
+                        } catch (error) {
 
                             console.error(
-                                "Invalid JSON response:",
+                                "Invalid server response:",
                                 responseText
                             );
                         }
@@ -898,7 +862,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                     /* -------------------------------------
-                       CLOSE RESERVATION MODAL
+                       CLOSE CONFIRMATION MODAL
                     ------------------------------------- */
 
                     closeModal(
@@ -911,13 +875,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     ------------------------------------- */
 
                     if (reservationForm) {
-
                         reservationForm.reset();
                     }
 
 
                     if (checkInPicker) {
-
                         checkInPicker.clear();
                     }
 
@@ -942,7 +904,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                     /* -------------------------------------
-                       OPEN SUCCESS MODAL
+                       SUCCESS MODAL
                     ------------------------------------- */
 
                     openModal(
@@ -957,12 +919,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         error
                     );
 
-
                     alert(
                         error.message ||
                         "Rezervasiya göndərilərkən xəta baş verdi."
                     );
-
 
                 } finally {
 
@@ -1038,7 +998,6 @@ document.addEventListener("DOMContentLoaded", () => {
             overlay.addEventListener(
                 "click",
                 () => {
-
                     closeModal(
                         reservationModal
                     );
@@ -1064,7 +1023,6 @@ document.addEventListener("DOMContentLoaded", () => {
             overlay.addEventListener(
                 "click",
                 () => {
-
                     closeModal(
                         successModal
                     );
