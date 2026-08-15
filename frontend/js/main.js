@@ -82,22 +82,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-   MOBILE / TABLET NAVBAR
+   MOBILE NAVBAR — FINAL
 ===================================================== */
 
-    const mobileMenu =
-        document.getElementById("mobileMenu");
-
-    const navMenu =
-        document.querySelector(".nav-menu");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const navMenu = document.querySelector(".nav-menu");
 
     if (mobileMenu && navMenu) {
 
-        /* ================================================
-           HAMBURGER
-        ================================================ */
-
-        mobileMenu.addEventListener("click", (event) => {
+        mobileMenu.addEventListener("click", function (event) {
 
             event.preventDefault();
             event.stopPropagation();
@@ -107,8 +100,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (isOpen) {
 
-                mobileMenu.classList.remove("active");
                 navMenu.classList.remove("active");
+                mobileMenu.classList.remove("active");
 
                 mobileMenu.setAttribute(
                     "aria-expanded",
@@ -117,78 +110,58 @@ document.addEventListener("DOMContentLoaded", () => {
 
             } else {
 
-                mobileMenu.classList.add("active");
                 navMenu.classList.add("active");
+                mobileMenu.classList.add("active");
 
                 mobileMenu.setAttribute(
                     "aria-expanded",
                     "true"
                 );
             }
+
         });
 
 
-        /* ================================================
-           NAV LINK → CLOSE MENU
-        ================================================ */
+        /* NAV LINK CLICK */
 
-        const navLinks =
-            navMenu.querySelectorAll("a");
+        navMenu.querySelectorAll("a").forEach((link) => {
 
-        navLinks.forEach((link) => {
+            link.addEventListener("click", function () {
 
-            link.addEventListener("click", () => {
-
-                mobileMenu.classList.remove("active");
                 navMenu.classList.remove("active");
+                mobileMenu.classList.remove("active");
 
                 mobileMenu.setAttribute(
                     "aria-expanded",
                     "false"
                 );
+
             });
+
         });
 
 
-        /* ================================================
-           OUTSIDE CLICK
-        ================================================ */
+        /* OUTSIDE CLICK */
 
-        document.addEventListener("click", (event) => {
+        document.addEventListener("click", function (event) {
 
             if (
+                navMenu.classList.contains("active") &&
                 !navMenu.contains(event.target) &&
                 !mobileMenu.contains(event.target)
             ) {
 
-                mobileMenu.classList.remove("active");
                 navMenu.classList.remove("active");
+                mobileMenu.classList.remove("active");
 
                 mobileMenu.setAttribute(
                     "aria-expanded",
                     "false"
                 );
             }
+
         });
 
-
-        /* ================================================
-           ESC
-        ================================================ */
-
-        document.addEventListener("keydown", (event) => {
-
-            if (event.key === "Escape") {
-
-                mobileMenu.classList.remove("active");
-                navMenu.classList.remove("active");
-
-                mobileMenu.setAttribute(
-                    "aria-expanded",
-                    "false"
-                );
-            }
-        });
     }
 
 
