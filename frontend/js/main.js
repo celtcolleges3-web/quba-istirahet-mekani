@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
@@ -54,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (nextBtn) {
+
             nextBtn.addEventListener("click", () => {
                 nextSlide();
                 startAutoSlide();
@@ -61,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (prevBtn) {
+
             prevBtn.addEventListener("click", () => {
                 prevSlide();
                 startAutoSlide();
@@ -82,51 +83,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-   MOBILE NAVBAR — FINAL
-===================================================== */
+       MOBILE NAVBAR
+    ===================================================== */
 
-    const mobileMenu = document.getElementById("mobileMenu");
-    const navMenu = document.querySelector(".nav-menu");
+    const mobileMenu =
+        document.getElementById("mobileMenu");
+
+    const navMenu =
+        document.querySelector(".nav-menu");
 
     if (mobileMenu && navMenu) {
 
-        mobileMenu.addEventListener("click", function (event) {
+        mobileMenu.addEventListener(
+            "click",
+            function (event) {
 
-            event.preventDefault();
-            event.stopPropagation();
+                event.preventDefault();
+                event.stopPropagation();
 
-            const isOpen =
-                navMenu.classList.contains("active");
+                const isOpen =
+                    navMenu.classList.contains("active");
 
-            if (isOpen) {
+                if (isOpen) {
 
-                navMenu.classList.remove("active");
-                mobileMenu.classList.remove("active");
+                    navMenu.classList.remove("active");
+                    mobileMenu.classList.remove("active");
 
-                mobileMenu.setAttribute(
-                    "aria-expanded",
-                    "false"
-                );
+                    mobileMenu.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
 
-            } else {
+                } else {
 
-                navMenu.classList.add("active");
-                mobileMenu.classList.add("active");
+                    navMenu.classList.add("active");
+                    mobileMenu.classList.add("active");
 
-                mobileMenu.setAttribute(
-                    "aria-expanded",
-                    "true"
-                );
+                    mobileMenu.setAttribute(
+                        "aria-expanded",
+                        "true"
+                    );
+                }
             }
+        );
 
-        });
-
-
-        /* NAV LINK CLICK */
 
         navMenu.querySelectorAll("a").forEach((link) => {
 
-            link.addEventListener("click", function () {
+            link.addEventListener("click", () => {
 
                 navMenu.classList.remove("active");
                 mobileMenu.classList.remove("active");
@@ -135,15 +139,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     "aria-expanded",
                     "false"
                 );
-
             });
 
         });
 
 
-        /* OUTSIDE CLICK */
-
-        document.addEventListener("click", function (event) {
+        document.addEventListener("click", (event) => {
 
             if (
                 navMenu.classList.contains("active") &&
@@ -161,7 +162,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
         });
-
     }
 
 
@@ -336,7 +336,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 firstDayOfWeek: 1
             }
         });
-
     }
 
 
@@ -357,7 +356,9 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
 
-        return "";
+        return checkIn
+            ? checkIn.value.trim()
+            : "";
     }
 
 
@@ -374,7 +375,9 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
 
-        return "";
+        return checkOut
+            ? checkOut.value.trim()
+            : "";
     }
 
 
@@ -384,7 +387,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function openModal(modal) {
 
-        if (!modal) return;
+        if (!modal) {
+            return;
+        }
 
         modal.classList.add("active");
 
@@ -403,7 +408,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function closeModal(modal) {
 
-        if (!modal) return;
+        if (!modal) {
+            return;
+        }
+
+        /*
+         * Remove focus from a button inside the modal
+         * before aria-hidden becomes true.
+         */
+        if (
+            document.activeElement &&
+            modal.contains(document.activeElement)
+        ) {
+            document.activeElement.blur();
+        }
 
         modal.classList.remove("active");
 
@@ -413,6 +431,91 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         document.body.classList.remove("modal-open");
+    }
+
+
+    /* =====================================================
+       CREATE RESERVATION OBJECT
+    ===================================================== */
+
+    function buildReservationFromForm() {
+
+        const guestNameValue =
+            fullName
+                ? fullName.value.trim()
+                : "";
+
+        const phoneValue =
+            phone
+                ? phone.value.trim()
+                : "";
+
+        const roomValue =
+            roomType
+                ? roomType.value.trim()
+                : "";
+
+        const guestsValue =
+            guestCount
+                ? guestCount.value.trim()
+                : "";
+
+        const checkInValue =
+            getCheckInValue();
+
+        const checkOutValue =
+            getCheckOutValue();
+
+
+        if (
+            !guestNameValue ||
+            !phoneValue ||
+            !roomValue ||
+            !guestsValue ||
+            !checkInValue ||
+            !checkOutValue
+        ) {
+
+            return null;
+        }
+
+
+        const parsedGuestCount =
+            Number(guestsValue);
+
+
+        if (
+            !Number.isInteger(parsedGuestCount) ||
+            parsedGuestCount < 1
+        ) {
+
+            return null;
+        }
+
+
+        return {
+
+            guestName:
+            guestNameValue,
+
+            phone:
+            phoneValue,
+
+            roomType:
+            roomValue,
+
+            guestCount:
+            parsedGuestCount,
+
+            checkIn:
+            checkInValue,
+
+            checkOut:
+            checkOutValue,
+
+            specialRequest:
+                ""
+        };
     }
 
 
@@ -428,49 +531,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 event.preventDefault();
 
+
                 /* -----------------------------------------
-                   READ VALUES
+                   CREATE RESERVATION
                 ----------------------------------------- */
 
-                const guestNameValue =
-                    fullName
-                        ? fullName.value.trim()
-                        : "";
-
-                const phoneValue =
-                    phone
-                        ? phone.value.trim()
-                        : "";
-
-                const roomValue =
-                    roomType
-                        ? roomType.value
-                        : "";
-
-                const guestsValue =
-                    guestCount
-                        ? guestCount.value
-                        : "";
-
-                const checkInValue =
-                    getCheckInValue();
-
-                const checkOutValue =
-                    getCheckOutValue();
+                const reservation =
+                    buildReservationFromForm();
 
 
                 /* -----------------------------------------
                    VALIDATION
                 ----------------------------------------- */
 
-                if (
-                    !guestNameValue ||
-                    !phoneValue ||
-                    !roomValue ||
-                    !guestsValue ||
-                    !checkInValue ||
-                    !checkOutValue
-                ) {
+                if (!reservation) {
 
                     alert(
                         "Zəhmət olmasa bütün məlumatları doldurun."
@@ -487,8 +561,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (
                     checkInPicker &&
                     checkOutPicker &&
-                    checkInPicker.selectedDates.length &&
-                    checkOutPicker.selectedDates.length
+                    checkInPicker.selectedDates.length > 0 &&
+                    checkOutPicker.selectedDates.length > 0
                 ) {
 
                     const startDate =
@@ -496,6 +570,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     const endDate =
                         checkOutPicker.selectedDates[0];
+
 
                     if (endDate <= startDate) {
 
@@ -509,32 +584,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 /* -----------------------------------------
-                   CREATE RESERVATION
+                   SAVE CURRENT RESERVATION
                 ----------------------------------------- */
 
-                currentReservation = {
-
-                    guestName:
-                        guestNameValue,
-
-                    phone:
-                        phoneValue,
-
-                    roomType:
-                        roomValue,
-
-                    guestCount:
-                        Number(guestsValue),
-
-                    checkIn:
-                        checkInValue,
-
-                    checkOut:
-                        checkOutValue,
-
-                    specialRequest:
-                        ""
-                };
+                currentReservation =
+                    reservation;
 
 
                 /* -----------------------------------------
@@ -542,42 +596,49 @@ document.addEventListener("DOMContentLoaded", () => {
                 ----------------------------------------- */
 
                 if (summaryName) {
+
                     summaryName.textContent =
                         currentReservation.guestName;
                 }
 
                 if (summaryPhone) {
+
                     summaryPhone.textContent =
                         currentReservation.phone;
                 }
 
                 if (summaryRoom) {
+
                     summaryRoom.textContent =
                         currentReservation.roomType;
                 }
 
                 if (summaryGuests) {
+
                     summaryGuests.textContent =
                         `${currentReservation.guestCount} qonaq`;
                 }
 
                 if (summaryCheckIn) {
+
                     summaryCheckIn.textContent =
                         currentReservation.checkIn;
                 }
 
                 if (summaryCheckOut) {
+
                     summaryCheckOut.textContent =
                         currentReservation.checkOut;
                 }
 
 
                 /* -----------------------------------------
-                   OPEN CONFIRMATION
+                   OPEN CONFIRMATION MODAL
                 ----------------------------------------- */
 
-                openModal(reservationModal);
-
+                openModal(
+                    reservationModal
+                );
             }
         );
     }
@@ -592,7 +653,10 @@ document.addEventListener("DOMContentLoaded", () => {
         closeReservationModal.addEventListener(
             "click",
             () => {
-                closeModal(reservationModal);
+
+                closeModal(
+                    reservationModal
+                );
             }
         );
     }
@@ -603,7 +667,10 @@ document.addEventListener("DOMContentLoaded", () => {
         cancelReservation.addEventListener(
             "click",
             () => {
-                closeModal(reservationModal);
+
+                closeModal(
+                    reservationModal
+                );
             }
         );
     }
@@ -622,6 +689,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 event.preventDefault();
                 event.stopPropagation();
 
+
+                /* -----------------------------------------
+                   FINAL VALIDATION
+                ----------------------------------------- */
+
                 if (!currentReservation) {
 
                     alert(
@@ -631,7 +703,97 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-                confirmReservation.disabled = true;
+
+                /* -----------------------------------------
+                   CREATE CLEAN PAYLOAD
+                ----------------------------------------- */
+
+                const reservationPayload = {
+
+                    guestName:
+                        String(
+                            currentReservation.guestName || ""
+                        ).trim(),
+
+                    phone:
+                        String(
+                            currentReservation.phone || ""
+                        ).trim(),
+
+                    roomType:
+                        String(
+                            currentReservation.roomType || ""
+                        ).trim(),
+
+                    guestCount:
+                        Number(
+                            currentReservation.guestCount
+                        ),
+
+                    checkIn:
+                        String(
+                            currentReservation.checkIn || ""
+                        ).trim(),
+
+                    checkOut:
+                        String(
+                            currentReservation.checkOut || ""
+                        ).trim(),
+
+                    specialRequest:
+                        String(
+                            currentReservation.specialRequest || ""
+                        ).trim()
+                };
+
+
+                /* -----------------------------------------
+                   FINAL CLIENT VALIDATION
+                ----------------------------------------- */
+
+                if (
+                    !reservationPayload.guestName ||
+                    !reservationPayload.phone ||
+                    !reservationPayload.roomType ||
+                    !reservationPayload.guestCount ||
+                    !reservationPayload.checkIn ||
+                    !reservationPayload.checkOut
+                ) {
+
+                    console.error(
+                        "Invalid reservation payload:",
+                        reservationPayload
+                    );
+
+                    alert(
+                        "Rezervasiya məlumatları tam deyil. Zəhmət olmasa məlumatları yenidən yoxlayın."
+                    );
+
+                    return;
+                }
+
+
+                /* -----------------------------------------
+                   DEBUG
+                ----------------------------------------- */
+
+                console.log(
+                    "RESERVATION DATA SENT:",
+                    reservationPayload
+                );
+
+                console.log(
+                    "RESERVATION API:",
+                    API_URL
+                );
+
+
+                /* -----------------------------------------
+                   BUTTON STATE
+                ----------------------------------------- */
+
+                confirmReservation.disabled =
+                    true;
 
                 const oldText =
                     confirmReservation.textContent;
@@ -642,6 +804,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 try {
 
+                    /* -------------------------------------
+                       SEND TO BACKEND
+                    ------------------------------------- */
+
                     const response =
                         await fetch(
                             API_URL,
@@ -650,31 +816,73 @@ document.addEventListener("DOMContentLoaded", () => {
 
                                 headers: {
                                     "Content-Type":
+                                        "application/json",
+
+                                    "Accept":
                                         "application/json"
                                 },
 
                                 body:
                                     JSON.stringify(
-                                        currentReservation
+                                        reservationPayload
                                     )
                             }
                         );
 
 
+                    /* -------------------------------------
+                       READ RESPONSE
+                    ------------------------------------- */
+
                     let data = {};
 
-                    try {
-                        data = await response.json();
-                    } catch {
-                        data = {};
+                    const responseText =
+                        await response.text();
+
+
+                    if (responseText) {
+
+                        try {
+
+                            data =
+                                JSON.parse(
+                                    responseText
+                                );
+
+                        } catch (parseError) {
+
+                            console.error(
+                                "Invalid JSON response:",
+                                responseText
+                            );
+                        }
                     }
 
+
+                    console.log(
+                        "RESERVATION RESPONSE:",
+                        {
+                            status:
+                            response.status,
+
+                            ok:
+                            response.ok,
+
+                            data:
+                            data
+                        }
+                    );
+
+
+                    /* -------------------------------------
+                       BACKEND ERROR
+                    ------------------------------------- */
 
                     if (!response.ok) {
 
                         throw new Error(
                             data.message ||
-                            "Rezervasiya göndərilə bilmədi."
+                            `Rezervasiya göndərilə bilmədi. Server: ${response.status}`
                         );
                     }
 
@@ -683,24 +891,36 @@ document.addEventListener("DOMContentLoaded", () => {
                        SUCCESS
                     ------------------------------------- */
 
-                    closeModal(
-                        reservationModal
-                    );
-
-                    openModal(
-                        successModal
+                    console.log(
+                        "Reservation confirmed successfully:",
+                        data
                     );
 
 
                     /* -------------------------------------
-                       RESET
+                       CLOSE RESERVATION MODAL
                     ------------------------------------- */
 
-                    reservationForm.reset();
+                    closeModal(
+                        reservationModal
+                    );
+
+
+                    /* -------------------------------------
+                       RESET FORM
+                    ------------------------------------- */
+
+                    if (reservationForm) {
+
+                        reservationForm.reset();
+                    }
+
 
                     if (checkInPicker) {
+
                         checkInPicker.clear();
                     }
+
 
                     if (checkOutPicker) {
 
@@ -712,20 +932,37 @@ document.addEventListener("DOMContentLoaded", () => {
                         );
                     }
 
-                    currentReservation = null;
+
+                    /* -------------------------------------
+                       CLEAR CURRENT RESERVATION
+                    ------------------------------------- */
+
+                    currentReservation =
+                        null;
+
+
+                    /* -------------------------------------
+                       OPEN SUCCESS MODAL
+                    ------------------------------------- */
+
+                    openModal(
+                        successModal
+                    );
 
 
                 } catch (error) {
 
                     console.error(
-                        "Reservation error:",
+                        "Reservation confirmation error:",
                         error
                     );
+
 
                     alert(
                         error.message ||
                         "Rezervasiya göndərilərkən xəta baş verdi."
                     );
+
 
                 } finally {
 
@@ -735,7 +972,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     confirmReservation.textContent =
                         oldText;
                 }
-
             }
         );
     }
@@ -751,13 +987,14 @@ document.addEventListener("DOMContentLoaded", () => {
             "click",
             () => {
 
-                closeModal(successModal);
+                closeModal(
+                    successModal
+                );
 
                 window.scrollTo({
                     top: 0,
                     behavior: "smooth"
                 });
-
             }
         );
     }
@@ -773,9 +1010,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (event.key === "Escape") {
 
-                closeModal(reservationModal);
-                closeModal(successModal);
+                closeModal(
+                    reservationModal
+                );
 
+                closeModal(
+                    successModal
+                );
             }
         }
     );
@@ -797,7 +1038,10 @@ document.addEventListener("DOMContentLoaded", () => {
             overlay.addEventListener(
                 "click",
                 () => {
-                    closeModal(reservationModal);
+
+                    closeModal(
+                        reservationModal
+                    );
                 }
             );
         }
@@ -820,11 +1064,13 @@ document.addEventListener("DOMContentLoaded", () => {
             overlay.addEventListener(
                 "click",
                 () => {
-                    closeModal(successModal);
+
+                    closeModal(
+                        successModal
+                    );
                 }
             );
         }
     }
 
 });
-
