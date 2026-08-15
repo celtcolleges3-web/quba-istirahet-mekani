@@ -610,8 +610,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-   CONFIRM RESERVATION
-===================================================== */
+       CONFIRM RESERVATION
+    ===================================================== */
 
     if (confirmReservation) {
 
@@ -622,11 +622,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 event.preventDefault();
                 event.stopPropagation();
 
-
-                /* -----------------------------------------
-                   CHECK CURRENT RESERVATION
-                ----------------------------------------- */
-
                 if (!currentReservation) {
 
                     alert(
@@ -636,82 +631,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-
-                /* -----------------------------------------
-                   PREVENT DOUBLE CLICK
-                ----------------------------------------- */
-
-                if (confirmReservation.disabled) {
-                    return;
-                }
-
-
                 confirmReservation.disabled = true;
-
 
                 const oldText =
                     confirmReservation.textContent;
-
 
                 confirmReservation.textContent =
                     "Göndərilir...";
 
 
                 try {
-
-                    /* -------------------------------------
-                       FINAL DATA
-                    ------------------------------------- */
-
-                    const reservationData = {
-
-                        guestName:
-                        currentReservation.guestName,
-
-                        phone:
-                        currentReservation.phone,
-
-                        roomType:
-                        currentReservation.roomType,
-
-                        guestCount:
-                            Number(
-                                currentReservation.guestCount
-                            ),
-
-                        checkIn:
-                        currentReservation.checkIn,
-
-                        checkOut:
-                        currentReservation.checkOut,
-
-                        specialRequest:
-                            currentReservation.specialRequest || ""
-                    };
-
-
-                    /* -------------------------------------
-                       FINAL FRONTEND VALIDATION
-                    ------------------------------------- */
-
-                    if (
-                        !reservationData.guestName ||
-                        !reservationData.phone ||
-                        !reservationData.roomType ||
-                        !reservationData.guestCount ||
-                        !reservationData.checkIn ||
-                        !reservationData.checkOut
-                    ) {
-
-                        throw new Error(
-                            "Bütün məcburi rezervasiya məlumatları tamamlanmayıb."
-                        );
-                    }
-
-
-                    /* -------------------------------------
-                       SEND TO BACKEND
-                    ------------------------------------- */
 
                     const response =
                         await fetch(
@@ -721,113 +650,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
                                 headers: {
                                     "Content-Type":
-                                        "application/json",
-
-                                    "Accept":
                                         "application/json"
                                 },
 
                                 body:
                                     JSON.stringify(
-                                        reservationData
+                                        currentReservation
                                     )
                             }
                         );
 
 
-                    /* -------------------------------------
-                       READ RESPONSE
-                    ------------------------------------- */
-
                     let data = {};
 
                     try {
-
-                        data =
-                            await response.json();
-
-                    } catch (jsonError) {
-
-                        console.error(
-                            "Invalid server response:",
-                            jsonError
-                        );
+                        data = await response.json();
+                    } catch {
+                        data = {};
                     }
 
-
-                    /* -------------------------------------
-                       SERVER ERROR
-                    ------------------------------------- */
 
                     if (!response.ok) {
 
                         throw new Error(
-
                             data.message ||
-
-                            data.telegramError ||
-
-                            `Server xətası: ${response.status}`
+                            "Rezervasiya göndərilə bilmədi."
                         );
                     }
 
 
                     /* -------------------------------------
-                       VERIFY SUCCESS
-                    ------------------------------------- */
-
-                    if (
-                        data.success !== true
-                    ) {
-
-                        throw new Error(
-
-                            data.message ||
-
-                            "Rezervasiya təsdiqlənmədi."
-                        );
-                    }
-
-
-                    /* -------------------------------------
-                       RESERVATION REALLY CONFIRMED
-                    ------------------------------------- */
-
-                    console.log(
-                        "Reservation confirmed:",
-                        data
-                    );
-
-
-                    /* -------------------------------------
-                       CLOSE REVIEW MODAL
+                       SUCCESS
                     ------------------------------------- */
 
                     closeModal(
                         reservationModal
                     );
 
+                    openModal(
+                        successModal
+                    );
+
 
                     /* -------------------------------------
-                       RESET FORM
+                       RESET
                     ------------------------------------- */
 
                     reservationForm.reset();
 
-
-                    /* -------------------------------------
-                       CLEAR CHECK-IN
-                    ------------------------------------- */
-
                     if (checkInPicker) {
-
                         checkInPicker.clear();
                     }
-
-
-                    /* -------------------------------------
-                       CLEAR CHECK-OUT
-                    ------------------------------------- */
 
                     if (checkOutPicker) {
 
@@ -839,47 +712,22 @@ document.addEventListener("DOMContentLoaded", () => {
                         );
                     }
 
-
-                    /* -------------------------------------
-                       CLEAR CURRENT RESERVATION
-                    ------------------------------------- */
-
-                    currentReservation =
-                        null;
-
-
-                    /* -------------------------------------
-                       SUCCESS MODAL
-                    ------------------------------------- */
-
-                    openModal(
-                        successModal
-                    );
+                    currentReservation = null;
 
 
                 } catch (error) {
 
                     console.error(
-                        "Reservation confirmation error:",
+                        "Reservation error:",
                         error
                     );
 
-
-                    /* -------------------------------------
-                       SHOW REAL ERROR
-                    ------------------------------------- */
-
                     alert(
                         error.message ||
-                        "Rezervasiya təsdiqlənərkən xəta baş verdi."
+                        "Rezervasiya göndərilərkən xəta baş verdi."
                     );
 
-
                 } finally {
-
-                    /* -------------------------------------
-                       RESTORE BUTTON
-                    ------------------------------------- */
 
                     confirmReservation.disabled =
                         false;
@@ -891,7 +739,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
     }
-
 
 
     /* =====================================================
