@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
@@ -5,16 +6,24 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     const slides = document.querySelectorAll(".hero-slide");
-    const dots = document.querySelectorAll(".hero-dots .dot");
-    const prevBtn = document.querySelector(".hero-prev");
-    const nextBtn = document.querySelector(".hero-next");
+    const dots = document.querySelectorAll(".hero-dot");
+    const prevBtn = document.getElementById("heroPrev");
+    const nextBtn = document.getElementById("heroNext");
 
-    if (slides.length) {
+    if (slides.length > 0) {
 
         let currentSlide = 0;
-        let autoSlide;
+        let autoSlide = null;
 
         function showSlide(index) {
+
+            if (index < 0) {
+                index = slides.length - 1;
+            }
+
+            if (index >= slides.length) {
+                index = 0;
+            }
 
             slides.forEach((slide, i) => {
                 slide.classList.toggle("active", i === index);
@@ -28,45 +37,33 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         function nextSlide() {
-
-            const next =
-                (currentSlide + 1) % slides.length;
-
-            showSlide(next);
+            showSlide(currentSlide + 1);
         }
 
         function prevSlide() {
-
-            const previous =
-                (currentSlide - 1 + slides.length) % slides.length;
-
-            showSlide(previous);
+            showSlide(currentSlide - 1);
         }
 
         function startAutoSlide() {
 
+            clearInterval(autoSlide);
+
             autoSlide = setInterval(() => {
                 nextSlide();
-            }, 4000);
-        }
-
-        function resetAutoSlide() {
-
-            clearInterval(autoSlide);
-            startAutoSlide();
+            }, 3000);
         }
 
         if (nextBtn) {
             nextBtn.addEventListener("click", () => {
                 nextSlide();
-                resetAutoSlide();
+                startAutoSlide();
             });
         }
 
         if (prevBtn) {
             prevBtn.addEventListener("click", () => {
                 prevSlide();
-                resetAutoSlide();
+                startAutoSlide();
             });
         }
 
@@ -74,13 +71,124 @@ document.addEventListener("DOMContentLoaded", () => {
 
             dot.addEventListener("click", () => {
                 showSlide(index);
-                resetAutoSlide();
+                startAutoSlide();
             });
 
         });
 
         showSlide(0);
         startAutoSlide();
+    }
+
+
+    /* =====================================================
+   MOBILE / TABLET NAVBAR
+===================================================== */
+
+    const mobileMenu =
+        document.getElementById("mobileMenu");
+
+    const navMenu =
+        document.querySelector(".nav-menu");
+
+    if (mobileMenu && navMenu) {
+
+        /* ================================================
+           HAMBURGER
+        ================================================ */
+
+        mobileMenu.addEventListener("click", (event) => {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            const isOpen =
+                navMenu.classList.contains("active");
+
+            if (isOpen) {
+
+                mobileMenu.classList.remove("active");
+                navMenu.classList.remove("active");
+
+                mobileMenu.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+            } else {
+
+                mobileMenu.classList.add("active");
+                navMenu.classList.add("active");
+
+                mobileMenu.setAttribute(
+                    "aria-expanded",
+                    "true"
+                );
+            }
+        });
+
+
+        /* ================================================
+           NAV LINK → CLOSE MENU
+        ================================================ */
+
+        const navLinks =
+            navMenu.querySelectorAll("a");
+
+        navLinks.forEach((link) => {
+
+            link.addEventListener("click", () => {
+
+                mobileMenu.classList.remove("active");
+                navMenu.classList.remove("active");
+
+                mobileMenu.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+            });
+        });
+
+
+        /* ================================================
+           OUTSIDE CLICK
+        ================================================ */
+
+        document.addEventListener("click", (event) => {
+
+            if (
+                !navMenu.contains(event.target) &&
+                !mobileMenu.contains(event.target)
+            ) {
+
+                mobileMenu.classList.remove("active");
+                navMenu.classList.remove("active");
+
+                mobileMenu.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+            }
+        });
+
+
+        /* ================================================
+           ESC
+        ================================================ */
+
+        document.addEventListener("keydown", (event) => {
+
+            if (event.key === "Escape") {
+
+                mobileMenu.classList.remove("active");
+                navMenu.classList.remove("active");
+
+                mobileMenu.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+            }
+        });
     }
 
 
@@ -157,17 +265,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       BACKEND API
+       BACKEND
     ===================================================== */
 
     const API_URL =
-        "http://localhost:5000/api/reservations";
+        "https://park-hotel-quba.onrender.com/api/reservations";
 
 
     /* =====================================================
        CURRENT RESERVATION
-
-       PRICE / NIGHTS / TOTAL PRICE YOXDUR
     ===================================================== */
 
     let currentReservation = null;
@@ -209,22 +315,28 @@ document.addEventListener("DOMContentLoaded", () => {
             onChange: function (selectedDates) {
 
                 if (
-                    selectedDates.length &&
+                    selectedDates.length > 0 &&
                     checkOutPicker
                 ) {
 
+                    const selectedDate =
+                        selectedDates[0];
+
                     checkOutPicker.set(
                         "minDate",
-                        selectedDates[0]
+                        selectedDate
                     );
 
                     if (
-                        checkOutPicker.selectedDates.length &&
-                        checkOutPicker.selectedDates[0] <= selectedDates[0]
+                        checkOutPicker.selectedDates.length > 0
                     ) {
 
-                        checkOutPicker.clear();
+                        const checkoutDate =
+                            checkOutPicker.selectedDates[0];
 
+                        if (checkoutDate <= selectedDate) {
+                            checkOutPicker.clear();
+                        }
                     }
                 }
             }
@@ -251,6 +363,45 @@ document.addEventListener("DOMContentLoaded", () => {
                 firstDayOfWeek: 1
             }
         });
+
+    }
+
+
+    /* =====================================================
+       DATE VALUE HELPERS
+    ===================================================== */
+
+    function getCheckInValue() {
+
+        if (
+            checkInPicker &&
+            checkInPicker.selectedDates.length > 0
+        ) {
+
+            return checkInPicker.formatDate(
+                checkInPicker.selectedDates[0],
+                "Y-m-d"
+            );
+        }
+
+        return "";
+    }
+
+
+    function getCheckOutValue() {
+
+        if (
+            checkOutPicker &&
+            checkOutPicker.selectedDates.length > 0
+        ) {
+
+            return checkOutPicker.formatDate(
+                checkOutPicker.selectedDates[0],
+                "Y-m-d"
+            );
+        }
+
+        return "";
     }
 
 
@@ -300,9 +451,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
         reservationForm.addEventListener(
             "submit",
-            function (event) {
+            (event) => {
 
                 event.preventDefault();
+
+                /* -----------------------------------------
+                   READ VALUES
+                ----------------------------------------- */
+
+                const guestNameValue =
+                    fullName
+                        ? fullName.value.trim()
+                        : "";
+
+                const phoneValue =
+                    phone
+                        ? phone.value.trim()
+                        : "";
+
+                const roomValue =
+                    roomType
+                        ? roomType.value
+                        : "";
+
+                const guestsValue =
+                    guestCount
+                        ? guestCount.value
+                        : "";
+
+                const checkInValue =
+                    getCheckInValue();
+
+                const checkOutValue =
+                    getCheckOutValue();
 
 
                 /* -----------------------------------------
@@ -310,24 +491,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 ----------------------------------------- */
 
                 if (
-                    !fullName ||
-                    !phone ||
-                    !roomType ||
-                    !guestCount ||
-                    !checkIn ||
-                    !checkOut
-                ) {
-                    return;
-                }
-
-
-                if (
-                    !fullName.value.trim() ||
-                    !phone.value.trim() ||
-                    !roomType.value ||
-                    !guestCount.value ||
-                    !checkIn.value ||
-                    !checkOut.value
+                    !guestNameValue ||
+                    !phoneValue ||
+                    !roomValue ||
+                    !guestsValue ||
+                    !checkInValue ||
+                    !checkOutValue
                 ) {
 
                     alert(
@@ -339,30 +508,56 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 /* -----------------------------------------
-                   RESERVATION DATA
+                   DATE VALIDATION
+                ----------------------------------------- */
 
-                   ONLY FORM DATA
+                if (
+                    checkInPicker &&
+                    checkOutPicker &&
+                    checkInPicker.selectedDates.length &&
+                    checkOutPicker.selectedDates.length
+                ) {
+
+                    const startDate =
+                        checkInPicker.selectedDates[0];
+
+                    const endDate =
+                        checkOutPicker.selectedDates[0];
+
+                    if (endDate <= startDate) {
+
+                        alert(
+                            "Çıxış tarixi giriş tarixindən sonra olmalıdır."
+                        );
+
+                        return;
+                    }
+                }
+
+
+                /* -----------------------------------------
+                   CREATE RESERVATION
                 ----------------------------------------- */
 
                 currentReservation = {
 
                     guestName:
-                        fullName.value.trim(),
+                        guestNameValue,
 
                     phone:
-                        phone.value.trim(),
+                        phoneValue,
 
                     roomType:
-                    roomType.value,
+                        roomValue,
 
                     guestCount:
-                        Number(guestCount.value),
+                        Number(guestsValue),
 
                     checkIn:
-                    checkIn.value,
+                        checkInValue,
 
                     checkOut:
-                    checkOut.value,
+                        checkOutValue,
 
                     specialRequest:
                         ""
@@ -374,37 +569,31 @@ document.addEventListener("DOMContentLoaded", () => {
                 ----------------------------------------- */
 
                 if (summaryName) {
-
                     summaryName.textContent =
                         currentReservation.guestName;
                 }
 
                 if (summaryPhone) {
-
                     summaryPhone.textContent =
                         currentReservation.phone;
                 }
 
                 if (summaryRoom) {
-
                     summaryRoom.textContent =
                         currentReservation.roomType;
                 }
 
                 if (summaryGuests) {
-
                     summaryGuests.textContent =
                         `${currentReservation.guestCount} qonaq`;
                 }
 
                 if (summaryCheckIn) {
-
                     summaryCheckIn.textContent =
                         currentReservation.checkIn;
                 }
 
                 if (summaryCheckOut) {
-
                     summaryCheckOut.textContent =
                         currentReservation.checkOut;
                 }
@@ -422,7 +611,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       CLOSE CONFIRMATION
+       CLOSE RESERVATION MODAL
     ===================================================== */
 
     if (closeReservationModal) {
@@ -455,7 +644,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         confirmReservation.addEventListener(
             "click",
-            async () => {
+            async (event) => {
+
+                event.preventDefault();
+                event.stopPropagation();
 
                 if (!currentReservation) {
 
@@ -465,7 +657,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     return;
                 }
-
 
                 confirmReservation.disabled = true;
 
@@ -479,24 +670,31 @@ document.addEventListener("DOMContentLoaded", () => {
                 try {
 
                     const response =
-                        await fetch(API_URL, {
+                        await fetch(
+                            API_URL,
+                            {
+                                method: "POST",
 
-                            method: "POST",
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
 
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body:
-                                JSON.stringify(
-                                    currentReservation
-                                )
-                        });
+                                body:
+                                    JSON.stringify(
+                                        currentReservation
+                                    )
+                            }
+                        );
 
 
-                    const data =
-                        await response.json();
+                    let data = {};
+
+                    try {
+                        data = await response.json();
+                    } catch {
+                        data = {};
+                    }
 
 
                     if (!response.ok) {
@@ -509,17 +707,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                     /* -------------------------------------
-                       CLOSE CONFIRMATION
+                       SUCCESS
                     ------------------------------------- */
 
                     closeModal(
                         reservationModal
                     );
-
-
-                    /* -------------------------------------
-                       OPEN SUCCESS
-                    ------------------------------------- */
 
                     openModal(
                         successModal
@@ -527,7 +720,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                     /* -------------------------------------
-                       RESET FORM
+                       RESET
                     ------------------------------------- */
 
                     reservationForm.reset();
@@ -537,10 +730,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
 
                     if (checkOutPicker) {
-                        checkOutPicker.clear();
-                    }
 
-                    if (checkOutPicker) {
+                        checkOutPicker.clear();
+
                         checkOutPicker.set(
                             "minDate",
                             "today"
@@ -561,7 +753,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         error.message ||
                         "Rezervasiya göndərilərkən xəta baş verdi."
                     );
-
 
                 } finally {
 
@@ -600,7 +791,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       ESC → CLOSE MODAL
+       ESC
     ===================================================== */
 
     document.addEventListener(
@@ -609,21 +800,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (event.key === "Escape") {
 
-                closeModal(
-                    reservationModal
-                );
+                closeModal(reservationModal);
+                closeModal(successModal);
 
-                closeModal(
-                    successModal
-                );
             }
-
         }
     );
 
 
     /* =====================================================
-       OVERLAY → CLOSE MODAL
+       RESERVATION OVERLAY
     ===================================================== */
 
     if (reservationModal) {
@@ -645,6 +831,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    /* =====================================================
+       SUCCESS OVERLAY
+    ===================================================== */
+
     if (successModal) {
 
         const overlay =
@@ -665,61 +855,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-/* =====================================================
-   MOBILE NAVBAR
-===================================================== */
-
-const mobileMenu =
-    document.getElementById("mobileMenu");
-
-const navMenu =
-    document.querySelector(".nav-menu");
-
-if (mobileMenu && navMenu) {
-
-    mobileMenu.addEventListener("click", () => {
-
-        mobileMenu.classList.toggle("active");
-        navMenu.classList.toggle("active");
-
-    });
-
-
-    /* -----------------------------------------
-       CLOSE MENU AFTER CLICKING NAV LINK
-    ----------------------------------------- */
-
-    const navLinks =
-        navMenu.querySelectorAll("a");
-
-    navLinks.forEach((link) => {
-
-        link.addEventListener("click", () => {
-
-            mobileMenu.classList.remove("active");
-            navMenu.classList.remove("active");
-
-        });
-
-    });
-
-
-    /* -----------------------------------------
-       CLOSE MENU WHEN CLICKING OUTSIDE
-    ----------------------------------------- */
-
-    document.addEventListener("click", (event) => {
-
-        if (
-            !navMenu.contains(event.target) &&
-            !mobileMenu.contains(event.target)
-        ) {
-
-            mobileMenu.classList.remove("active");
-            navMenu.classList.remove("active");
-
-        }
-
-    });
-
-}
