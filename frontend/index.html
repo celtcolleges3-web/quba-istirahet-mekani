@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Park Hotel Quba - Qubada rahat və unudulmaz istirahət."
+          data-lang="site_description">
+
+    <title data-lang="site_title">Park Hotel Quba</title>
+
+    <!-- GOOGLE FONT -->
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- FLATPICKR -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet"
+          href="css/style.css">
+</head>
+
+<body>
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="navbar">
+
+    <div class="container navbar-inner">
+
+        <a href="#home"
+           class="logo">
+            <span data-lang="brand_name">PARK HOTEL</span>
+            <span data-lang="brand_location">QUBA</span>
+        </a>
+
+        <nav class="nav-menu">
+
+            <a href="#home" data-lang="nav_home">Ana səhifə</a>
+
+            <a href="#about" data-lang="nav_about">Haqqında</a>
+
+            <a href="#rooms" data-lang="nav_rooms">Otaqlar</a>
+
+            <a href="#gallery" data-lang="nav_gallery">Qalereya</a>
+
+            <a href="#reservation" data-lang="nav_reservation">Rezervasiya</a>
+
+            <a href="#contact" data-lang="nav_contact">Əlaqə</a>
+
+            <div class="language-dropdown">
+
+                <button type="button"
+                        class="language-current">
+                    AZ
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+
+                <div class="language-menu">
+                    <button type="button" data-language="az">🇦🇿 Azərbaycan</button>
+                    <button type="button" data-language="en">🇬🇧 English</button>
+                    <button type="button" data-language="ru">🇷🇺 Русский</button>
+                    <button type="button" data-language="tr">🇹🇷 Türkçe</button>
+                    <button type="button" data-language="de">🇩🇪 Deutsch</button>
+                    <button type="button" data-language="fr">🇫🇷 Français</button>
+                    <button type="button" data-language="es">🇪🇸 Español</button>
+                    <button type="button" data-language="it">🇮🇹 Italiano</button>
+                    <button type="button" data-language="ar">🇸🇦 العربية</button>
+                    <button type="button" data-language="fa">🇮🇷 فارسی</button>
+                    <button type="button" data-language="ka">🇬🇪 ქართული</button>
+                    <button type="button" data-language="uk">🇺🇦 Українська</button>
+                    <button type="button" data-language="zh">🇨🇳 中文</button>
+                    <button type="button" data-language="ja">🇯🇵 日本語</button>
+                    <button type="button" data-language="ko">🇰🇷 한국어</button>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+        <a href="#reservation"
+           class="nav-reservation">
+            <span data-lang="nav_reservation">Rezervasiya</span>
+        </a>
+
+        <button class="mobile-menu"
+                id="mobileMenu"
+                aria-label="Menyu" data-aria-lang="menu">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero"
+         id="home">
+
+    <div class="hero-slider">
+
+        <div class="hero-slide active"
+             style="background-image:url('images/hero-1.webp')">
+        </div>
+
+        <div class="hero-slide"
+             style="background-image:url('images/hero-2.webp')">
+        </div>
+
+        <div class="hero-slide"
+             style="background-image:url('images/hero-3.jpg')">
+        </div>
+
+        <div class="hero-slide"
+             style="background-image:url('images/hero-4.jpg')">
+        </div>
+
+        <div class="hero-slide"
+             style="background-image:url('images/hero-5.jpeg')">
+        </div>
+
+    </div>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content container">
+
+        <p class="hero-location">
+            <span data-lang="hero_location">QUBA • AZƏRBAYCAN</span>
+        </p>
+
+        <h1>
+            <span style="color: #fff;"  data-lang="hero_title">Qubanın qəlbində</span>
+            <span data-lang="hero_title_highlight">rahatlıq</span>
+        </h1>
+
+        <p class="hero-description">
+            <span data-lang="hero_description">Təbiətin gözəlliyi, dağ mənzərəsi və
+            rahatlığın bir arada olduğu Park Hotel Quba.</span>
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#reservation"
+               class="btn btn-gold">
+
+                <span data-lang="hero_book">Rezervasiya et</span>
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </a>
+
+            <a href="#rooms"
+               class="btn btn-outline">
+
+                <span data-lang="hero_rooms">Otaqlarımıza bax</span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-controls">
+
+        <button id="heroPrev"
+                aria-label="Əvvəlki şəkil" data-aria-lang="previous_image">
+
+            <i class="fa-solid fa-chevron-left"></i>
+
+        </button>
+
+        <div class="hero-dots">
+
+            <span class="hero-dot active"></span>
+            <span class="hero-dot"></span>
+            <span class="hero-dot"></span>
+            <span class="hero-dot"></span>
+            <span class="hero-dot"></span>
+
+        </div>
+
+        <button id="heroNext"
+                aria-label="Növbəti şəkil" data-aria-lang="next_image">
+
+            <i class="fa-solid fa-chevron-right"></i>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ABOUT
+===================================================== -->
+
+<section class="section about"
+         id="about">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span data-lang="about_label">HAQQINDA</span>
+
+            <h2>
+                <span style="color: #fff;"  data-lang="about_title">Qubanın təbiəti ilə</span>
+                <strong data-lang="about_title_highlight">vəhdətdə</strong>
+            </h2>
+
+        </div>
+
+        <div class="about-grid">
+
+            <div class="about-image">
+
+                <img src="images/about-1.webp"
+                     alt="Quba" data-alt-lang="about_image_alt">
+
+            </div>
+
+            <div class="about-content">
+
+                <span class="about-label">
+                    <span data-lang="hero_location">QUBA • AZƏRBAYCAN</span>
+                </span>
+
+                <h3>
+                    <span data-lang="about_heading">Təbiətin qoynunda
+                    unudulmaz istirahət</span>
+                </h3>
+
+                <p>
+                    <span data-lang="about_text_1">Quba Azərbaycanın ən gözəl və zəngin təbiətə
+                    malik bölgələrindən biridir. Böyük Qafqaz
+                    dağlarının ətəyində yerləşən Quba öz möhtəşəm
+                    dağ mənzərələri, sıx meşələri, çayları və
+                    təmiz havası ilə seçilir.</span>
+                </p>
+
+                <p>
+                    <span data-lang="about_text_2">Bölgə qədim tarixə malikdir. Quba xanlığı
+                    XVIII əsrdə Azərbaycanın siyasi və mədəni
+                    həyatında mühüm rol oynamışdır. Quba şəhəri
+                    və ətraf kəndlər bu gün də öz tarixi
+                    abidələri, qədim yaşayış məskənləri və
+                    zəngin mədəni irsi ilə diqqət çəkir.</span>
+                </p>
+
+                <p>
+                    <span data-lang="about_text_3">Qubaya gələn qonaqlar Qəçrəş meşələrini,
+                    Afurca şəlaləsini, Xınalıq kəndini və
+                    digər təbii və tarixi məkanları ziyarət
+                    edə bilərlər.</span>
+                </p>
+
+                <div class="about-features">
+
+                    <div>
+                        <i class="fa-solid fa-mountain"></i>
+                        <span data-lang="about_feature_mountain">Dağ mənzərəsi</span>
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-tree"></i>
+                        <span data-lang="about_feature_nature">Təmiz təbiət</span>
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span data-lang="about_feature_quba">Quba</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ROOMS
+===================================================== -->
+
+<section class="section rooms"
+         id="rooms">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span data-lang="rooms_label">OTAQLARIMIZ</span>
+
+            <h2>
+                <span style="color: #fff;" data-lang="rooms_title">Rahatlığınız üçün</span>
+                <strong data-lang="rooms_title_highlight">seçin</strong>
+            </h2>
+
+        </div>
+
+        <div class="rooms-grid">
+
+            <!-- TWIN -->
+
+            <article class="room-card">
+
+                <div class="room-image">
+
+                    <img src="images/room-1.jfif"
+                         alt="Twin Otaq" data-alt-lang="room_twin_alt">
+
+                </div>
+
+                <div class="room-body">
+
+                    <span class="room-number">
+                        01
+                    </span>
+
+                    <h3>
+                        <span data-lang="room_twin_name">Twin Otaq</span>
+                    </h3>
+
+                    <p>
+                        <span data-lang="room_twin_desc">Rahat və işıqlı Twin otaq iki
+                        tək nəfərlik yataqla təchiz olunub.</span>
+                    </p>
+
+                    <ul>
+
+                        <li>
+                            <i class="fa-solid fa-bed"></i>
+                            <span data-lang="room_twin_beds">2 tək nəfərlik yataq</span>
+                        </li>
+
+                        <li>
+                            <i class="fa-solid fa-wifi"></i>
+                            <span data-lang="room_wifi">Wi-Fi</span>
+                        </li>
+
+                        <li>
+                            <i class="fa-solid fa-mountain"></i>
+                            <span data-lang="room_view">Çay və Dağ mənzərəsi</span>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </article>
+
+
+            <!-- TRIPLE -->
+
+            <article class="room-card">
+
+                <div class="room-image">
+
+                    <img src="images/room-2.jfif"
+                         alt="Triple Otaq" data-alt-lang="room_triple_alt">
+
+                </div>
+
+                <div class="room-body">
+
+                    <span class="room-number">
+                        02
+                    </span>
+
+                    <h3>
+                        <span data-lang="room_triple_name">Triple Otaq</span>
+                    </h3>
+
+                    <p>
+                        <span data-lang="room_triple_desc">Ailə və dost qrupları üçün
+                        rahat və geniş Triple otaq.</span>
+                    </p>
+
+                    <ul>
+
+                        <li>
+                            <i class="fa-solid fa-bed"></i>
+                            <span data-lang="room_triple_beds">1 tək nəfərlik yataq və 1 taxt</span>
+                        </li>
+
+                        <li>
+                            <i class="fa-solid fa-wifi"></i>
+                            <span data-lang="room_wifi">Wi-Fi</span>
+                        </li>
+
+                        <li>
+                            <i class="fa-solid fa-mountain"></i>
+                            <span data-lang="room_view">Çay və Dağ mənzərəsi</span>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </article>
+
+
+            <!-- DOUBLE -->
+
+            <article class="room-card">
+
+                <div class="room-image">
+
+                    <img src="images/room-3.jfif"
+                         alt="Double Otaq" data-alt-lang="room_double_alt">
+
+                </div>
+
+                <div class="room-body">
+
+                    <span class="room-number">
+                        03
+                    </span>
+
+                    <h3>
+                        <span data-lang="room_double_name">Double Otaq</span>
+                    </h3>
+
+                    <p>
+                        <span data-lang="room_double_desc">Geniş və komfortlu Double otaq
+                        rahat istirahət üçün hazırlanıb.</span>
+                    </p>
+
+                    <ul>
+
+                        <li>
+                            <i class="fa-solid fa-bed"></i>
+                            <span data-lang="room_double_beds">2 tək nəfərlik yataq və 1 taxt</span>
+                        </li>
+
+                        <li>
+                            <i class="fa-solid fa-wifi"></i>
+                            <span data-lang="room_wifi">Wi-Fi</span>
+                        </li>
+
+                        <li>
+                            <i class="fa-solid fa-mountain"></i>
+                            <span data-lang="room_view">Çay və Dağ mənzərəsi</span>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     GALLERY
+===================================================== -->
+
+<section class="section gallery"
+         id="gallery">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span data-lang="gallery_label">QALEREYA</span>
+
+            <h2>
+                <span style="color: #fff;" data-lang="gallery_title">Park Hotel</span>
+                <strong data-lang="gallery_title_highlight">Quba</strong>
+            </h2>
+
+        </div>
+
+        <div class="gallery-grid">
+
+            <div class="gallery-item">
+                <img src="images/gallery-1.jpeg" alt="Park Hotel Quba 01" data-alt-lang="gallery_01_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-2.jpg" alt="Park Hotel Quba 02" data-alt-lang="gallery_02_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-3.jfif" alt="Park Hotel Quba 03" data-alt-lang="gallery_03_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-4.jfif" alt="Park Hotel Quba 04" data-alt-lang="gallery_04_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-5.webp" alt="Park Hotel Quba 05" data-alt-lang="gallery_05_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-6.jfif" alt="Park Hotel Quba 06" data-alt-lang="gallery_06_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-7.jfif" alt="Park Hotel Quba 07" data-alt-lang="gallery_07_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-8.jfif" alt="Park Hotel Quba 08" data-alt-lang="gallery_08_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-9.jfif" alt="Park Hotel Quba 09" data-alt-lang="gallery_09_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-10.jfif" alt="Park Hotel Quba 10" data-alt-lang="gallery_10_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-11.jfif" alt="Park Hotel Quba 11" data-alt-lang="gallery_11_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-12.jfif" alt="Park Hotel Quba 12" data-alt-lang="gallery_12_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-13.jfif" alt="Park Hotel Quba 13" data-alt-lang="gallery_13_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-14.jfif" alt="Park Hotel Quba 14" data-alt-lang="gallery_14_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-15.jfif" alt="Park Hotel Quba 15" data-alt-lang="gallery_15_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-16.jfif" alt="Park Hotel Quba 16" data-alt-lang="gallery_16_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-17.jfif" alt="Park Hotel Quba 17" data-alt-lang="gallery_17_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-18.jfif" alt="Park Hotel Quba 18" data-alt-lang="gallery_18_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-19.jfif" alt="Park Hotel Quba 19" data-alt-lang="gallery_19_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-20.jfif" alt="Park Hotel Quba 20" data-alt-lang="gallery_20_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-21.jfif" alt="Park Hotel Quba 21" data-alt-lang="gallery_21_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-22.jfif" alt="Park Hotel Quba 22" data-alt-lang="gallery_22_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-23.jfif" alt="Park Hotel Quba 23" data-alt-lang="gallery_23_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-24.jfif" alt="Park Hotel Quba 24" data-alt-lang="gallery_24_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-25.webp" alt="Park Hotel Quba 25" data-alt-lang="gallery_25_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-26.webp" alt="Park Hotel Quba 26" data-alt-lang="gallery_26_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-27.webp" alt="Park Hotel Quba 27" data-alt-lang="gallery_27_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-28.jfif" alt="Park Hotel Quba 28" data-alt-lang="gallery_28_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-29.jfif" alt="Park Hotel Quba 29" data-alt-lang="gallery_29_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-30.webp" alt="Park Hotel Quba 30" data-alt-lang="gallery_30_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-31.jfif" alt="Park Hotel Quba 31" data-alt-lang="gallery_31_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-32.webp" alt="Park Hotel Quba 32" data-alt-lang="gallery_32_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-33.webp" alt="Park Hotel Quba 33" data-alt-lang="gallery_33_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-34.jfif" alt="Park Hotel Quba 34" data-alt-lang="gallery_34_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-35.jfif" alt="Park Hotel Quba 35" data-alt-lang="gallery_35_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-36.jfif" alt="Park Hotel Quba 36" data-alt-lang="gallery_36_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-37.jfif" alt="Park Hotel Quba 37" data-alt-lang="gallery_37_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-38.jfif" alt="Park Hotel Quba 38" data-alt-lang="gallery_38_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-39.jfif" alt="Park Hotel Quba 39" data-alt-lang="gallery_39_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-40.jfif" alt="Park Hotel Quba 40" data-alt-lang="gallery_40_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-41.jfif" alt="Park Hotel Quba 41" data-alt-lang="gallery_41_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-42.jfif" alt="Park Hotel Quba 42" data-alt-lang="gallery_42_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-43.jfif" alt="Park Hotel Quba 43" data-alt-lang="gallery_43_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-44.jfif" alt="Park Hotel Quba 44" data-alt-lang="gallery_44_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-45.jfif" alt="Park Hotel Quba 45" data-alt-lang="gallery_45_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-46.jfif" alt="Park Hotel Quba 46" data-alt-lang="gallery_46_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-47.jfif" alt="Park Hotel Quba 47" data-alt-lang="gallery_47_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-48.jfif" alt="Park Hotel Quba 48" data-alt-lang="gallery_48_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-49.jfif" alt="Park Hotel Quba 49" data-alt-lang="gallery_49_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-50.jfif" alt="Park Hotel Quba 50" data-alt-lang="gallery_50_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-51.jfif" alt="Park Hotel Quba 51" data-alt-lang="gallery_51_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-52.jfif" alt="Park Hotel Quba 52" data-alt-lang="gallery_52_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-53.jfif" alt="Park Hotel Quba 53" data-alt-lang="gallery_53_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-54.jfif" alt="Park Hotel Quba 54" data-alt-lang="gallery_54_alt">
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/gallery-55.jfif" alt="Park Hotel Quba 55" data-alt-lang="gallery_55_alt">
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     GALLERY MODAL
+===================================================== -->
+
+<div class="gallery-modal"
+     id="galleryModal"
+     aria-hidden="true">
+
+    <button class="gallery-close"
+            id="galleryClose">
+
+        <i class="fa-solid fa-xmark"></i>
+
+    </button>
+
+    <button class="gallery-prev"
+            id="galleryPrev">
+
+        <i class="fa-solid fa-chevron-left"></i>
+
+    </button>
+
+    <img id="galleryModalImage"
+         src=""
+         alt="Gallery" data-alt-lang="gallery_modal_alt">
+
+    <button class="gallery-next"
+            id="galleryNext">
+
+        <i class="fa-solid fa-chevron-right"></i>
+
+    </button>
+
+</div>
+
+<!-- ==================== TESTIMONIALS ==================== -->
+<section class="testimonials-section" id="testimonials">
+    <div class="container">
+
+        <div class="testimonials-heading">
+            <span class="testimonials-subtitle" data-lang="testimonials_label">GUEST EXPERIENCES</span>
+            <h2 data-lang="testimonials_title">What Our Guests Say</h2>
+            <p>
+                <span data-lang="testimonials_description">Discover what our guests say about their stay at
+                Park Hotel Quba.</span>
+            </p>
+        </div>
+
+        <div class="testimonials-grid">
+
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    ★★★★★
+                </div>
+
+                <p class="testimonial-text">
+                    <span data-lang="testimonial_1_text">“A wonderful place to relax and enjoy the beautiful
+                    atmosphere of Quba. Everything was comfortable and
+                    the service was excellent.”</span>
+                </p>
+
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">A</div>
+
+                    <div>
+                        <h4 data-lang="testimonial_1_name">Ali M.</h4>
+                        <span data-lang="verified_guest">Verified Guest</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    ★★★★★
+                </div>
+
+                <p class="testimonial-text">
+                    <span data-lang="testimonial_2_text">“The hotel has a beautiful atmosphere and very
+                    friendly staff. We really enjoyed our stay and
+                    would definitely come back again.”</span>
+                </p>
+
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">E</div>
+
+                    <div>
+                        <h4 data-lang="testimonial_2_name">Emma K.</h4>
+                        <span data-lang="verified_guest">Verified Guest</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    ★★★★★
+                </div>
+
+                <p class="testimonial-text">
+                    <span data-lang="testimonial_3_text">“A peaceful and comfortable place surrounded by
+                    the beauty of Quba. The experience was very pleasant
+                    from beginning to end.”</span>
+                </p>
+
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">R</div>
+
+                    <div>
+                        <h4 data-lang="testimonial_3_name">Rashad A.</h4>
+                        <span data-lang="verified_guest">Verified Guest</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<!-- ==================== END TESTIMONIALS ==================== -->
+
+<!-- =====================================================
+     RESERVATION
+===================================================== -->
+
+<section class="section reservation"
+         id="reservation">
+
+    <div class="container">
+
+        <div class="reservation-box">
+
+            <div class="reservation-heading">
+
+                <span style="font-weight: bold;" data-lang="reservation_label">REZERVASİYA</span>
+
+                <h2>
+                    <span style="color: #fff; font-weight: bold;" data-lang="reservation_title">İstirahətinizi</span>
+                    <strong data-lang="reservation_title_highlight">indi planlayın</strong>
+                </h2>
+
+                <p>
+                    <span style="color: #fff;" data-lang="reservation_description"> <br>
+                        Aşağıdakı məlumatları daxil edin.
+                    Rezervasiya göndərildikdən sonra
+                    məlumatlarınızı təsdiqləməyiniz
+                    üçün pəncərə açılacaq.</span>
+                </p>
+
+            </div>
+
+
+            <form id="reservationForm"
+                  class="reservation-form">
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="fullName">
+                            <span data-lang="reservation_name_label">Ad və soyad</span>
+                        </label>
+
+                        <input type="text"
+                               id="fullName"
+                               name="fullName"
+                               placeholder="Ad və soyad" data-placeholder-lang="reservation_name_placeholder"
+                               required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            <span data-lang="reservation_phone_label">Telefon</span>
+                        </label>
+
+                        <input type="tel"
+                               id="phone"
+                               name="phone"
+                               placeholder="+994 XX XXX XX XX" data-placeholder-lang="reservation_phone_placeholder"
+                               required>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="roomType">
+                            <span data-lang="reservation_room_label">Otaq növü</span>
+                        </label>
+
+                        <select id="roomType"
+                                name="roomType"
+                                required>
+
+                            <option value="">
+                                <span data-lang="reservation_room_placeholder">Otaq seçin</span>
+                            </option>
+
+                            <option value="Twin Otaq">
+                                <span data-lang="room_twin_name">Twin Otaq</span>
+                            </option>
+
+                            <option value="Triple Otaq">
+                                <span data-lang="room_triple_name">Triple Otaq</span>
+                            </option>
+
+                            <option value="Double Otaq">
+                                <span data-lang="room_double_name">Double Otaq</span>
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="guestCount">
+                            <span data-lang="reservation_guest_label">Qonaq sayı</span>
+                        </label>
+
+                        <select id="guestCount"
+                                name="guestCount"
+                                required>
+
+                            <option value="">
+                                <span data-lang="reservation_guest_label">Qonaq sayı</span>
+                            </option>
+
+                            <option value="1">
+                                <span data-lang="guest_1">1 qonaq</span>
+                            </option>
+
+                            <option value="2">
+                                <span data-lang="guest_2">2 qonaq</span>
+                            </option>
+
+                            <option value="3">
+                                <span data-lang="guest_3">3 qonaq</span>
+                            </option>
+
+                            <option value="4">
+                                <span data-lang="guest_4">4 qonaq</span>
+                            </option>
+
+                            <option value="5">
+                                <span data-lang="guest_5">5 qonaq</span>
+                            </option>
+
+                            <option value="6">
+                                <span data-lang="guest_6">6 qonaq</span>
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="checkIn">
+                            <span data-lang="reservation_checkin_label">Giriş tarixi</span>
+                        </label>
+
+                        <input type="text"
+                               id="checkIn"
+                               name="checkIn"
+                               placeholder="Giriş tarixini seçin" data-placeholder-lang="reservation_checkin_placeholder"
+                               readonly
+                               required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="checkOut">
+                            <span data-lang="reservation_checkout_label">Çıxış tarixi</span>
+                        </label>
+
+                        <input type="text"
+                               id="checkOut"
+                               name="checkOut"
+                               placeholder="Çıxış tarixini seçin" data-placeholder-lang="reservation_checkout_placeholder"
+                               readonly
+                               required>
+
+                    </div>
+
+                </div>
+
+
+                <button type="submit"
+                        class="reservation-submit">
+
+                    <span data-lang="reservation_submit">İndi rezerv et</span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CONFIRMATION MODAL
+===================================================== -->
+
+<div class="modal"
+     id="reservationModal"
+     aria-hidden="true">
+
+    <div class="modal-overlay"></div>
+
+    <div class="modal-box">
+
+        <button class="modal-close"
+                id="closeReservationModal">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+        <div class="modal-icon">
+            <i class="fa-solid fa-calendar-check"></i>
+        </div>
+
+        <span class="modal-label">
+            <span data-lang="reservation_modal_label">REZERVASİYA MƏLUMATLARI</span>
+        </span>
+
+        <h3>
+            <span data-lang="reservation_confirm_title">Məlumatları təsdiqləyin</span>
+        </h3>
+
+        <div class="reservation-summary">
+
+            <div>
+                <span data-lang="summary_name_label">Ad və soyad</span>
+                <strong id="summaryName">—</strong>
+            </div>
+
+            <div>
+                <span data-lang="summary_phone_label">Telefon</span>
+                <strong id="summaryPhone">—</strong>
+            </div>
+
+            <div>
+                <span data-lang="summary_room_label">Otaq növü</span>
+                <strong id="summaryRoom">—</strong>
+            </div>
+
+            <div>
+                <span data-lang="summary_guests_label">Qonaq sayı</span>
+                <strong id="summaryGuests">—</strong>
+            </div>
+
+            <div>
+                <span data-lang="summary_checkin_label">Giriş</span>
+                <strong id="summaryCheckIn">—</strong>
+            </div>
+
+            <div>
+                <span data-lang="summary_checkout_label">Çıxış</span>
+                <strong id="summaryCheckOut">—</strong>
+            </div>
+
+        </div>
+
+        <p class="confirm-question">
+            <span data-lang="reservation_confirm_question">Rezervasiyanı təsdiq etmək istəyirsiniz?</span>
+        </p>
+
+        <div class="modal-buttons">
+
+            <button id="cancelReservation"
+                    class="modal-cancel">
+
+                <span data-lang="reservation_cancel">Ləğv et</span>
+
+            </button>
+
+            <button id="confirmReservation"
+                    class="modal-confirm">
+
+                <span data-lang="reservation_confirm">Təsdiq et</span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     SUCCESS MODAL
+===================================================== -->
+
+<div class="modal"
+     id="successModal"
+     aria-hidden="true">
+
+    <div class="modal-overlay"></div>
+
+    <div class="modal-box success-box">
+
+        <div class="success-icon">
+
+            <i class="fa-solid fa-check"></i>
+
+        </div>
+
+        <h3>
+            <span data-lang="reservation_success_title">Rezervasiyanız uğurla təsdiq olundu.</span>
+        </h3>
+
+        <p>
+            <span data-lang="reservation_success_text">Sizinlə əməkdaşlarımız tərəfindən tez
+            bir zamanda əlaqə saxlanılacaq, bizi
+            seçdiyiniz üçün təşəkkür edirik!</span>
+        </p>
+
+        <button id="homeButton"
+                class="modal-confirm">
+
+            <span data-lang="reservation_home">Ana səhifəyə qayıt</span>
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     CONTACT
+===================================================== -->
+
+<section class="section contact"
+         id="contact">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span data-lang="contact_label">ƏLAQƏ</span>
+
+            <h2>
+                <span data-lang="contact_title">Bizimlə</span>
+                <strong data-lang="contact_title_highlight">əlaqə saxlayın</strong>
+            </h2>
+
+        </div>
+
+        <div class="contact-grid">
+
+            <div class="contact-map">
+
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d47912.62766482673!2d48.42147374863281!3d41.3623679!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x403795f3e3577483%3A0xdf352d4b63237efb!2sQuba%20Park%20Otel!5e0!3m2!1saz!2saz!4v1786785485000!5m2!1saz!2saz" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+
+            </div>
+
+            <div class="contact-info">
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+
+                    <div>
+                        <span data-lang="contact_person_label">Əlaqədar şəxs</span>
+                        <strong data-lang="contact_person">Əlişanov Orxan</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+
+                    <div>
+                        <span data-lang="summary_phone_label">Telefon</span>
+                        <strong>+99455 262 72 92</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+
+                    <div>
+                        <span data-lang="contact_address_label">Ünvan</span>
+                        <strong>
+                            <span data-lang="contact_address">Quba şəhəri, 28 May Parkı</span>
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+
+                    <div>
+                        <span data-lang="contact_email_label">E-mail</span>
+                        <strong>
+                            quba.park.hotel@gmail.com
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <div class="container">
+
+        <div class="footer-grid">
+
+            <div class="footer-brand">
+
+                <a href="#home"
+                   class="logo">
+
+                    <span data-lang="brand_name">PARK HOTEL</span>
+                    <span data-lang="brand_location">QUBA</span>
+
+                </a>
+
+                <p>
+                    <span data-lang="footer_description">Qubanın gözəl təbiətində rahatlıq,
+                    sakitlik və unudulmaz istirahət.</span>
+                </p>
+
+                <div class="socials">
+
+                    <a href="https://www.instagram.com/parkhotelquba/"
+                       aria-label="Instagram" data-aria-lang="instagram">
+
+                        <i class="fa-brands fa-instagram"></i>
+
+                    </a>
+
+                    <a href="https://www.tiktok.com/@parkqubarestoranotel"
+                       aria-label="TikTok" data-aria-lang="tiktok">
+
+                        <i class="fa-brands fa-tiktok"></i>
+
+                    </a>
+
+                    <a href="https://wa.me/994552627292" target="_blank" rel="noopener"
+                       aria-label="WhatsApp" data-aria-lang="whatsapp">
+
+                        <i class="fa-brands fa-whatsapp"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h4>
+                    <span data-lang="footer_navigation">Naviqasiya</span>
+                </h4>
+
+                <a href="#home" data-lang="footer_home">
+                    Ana səhifə
+                </a>
+
+                <a href="#about">
+                    <span data-lang="footer_about">Haqqında</span>
+                </a>
+
+                <a href="#rooms" data-lang="footer_rooms">
+                    Otaqlar
+                </a>
+
+                <a href="#gallery" data-lang="footer_gallery">
+                    Qalereya
+                </a>
+
+                <a href="#reservation" data-lang="footer_reservation">
+                    Rezervasiya
+                </a>
+
+                <a href="#contact">
+                    <span data-lang="footer_contact">Əlaqə</span>
+                </a>
+
+            </div>
+
+
+            <div class="footer-contact">
+
+                <h4>
+                    <span data-lang="footer_contact">Əlaqə</span>
+                </h4>
+
+                <p>
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span data-lang="footer_address">Quba şəhəri, 28 May Parkı</span>
+                </p>
+
+                <p>
+                    <i class="fa-solid fa-phone"></i>
+                    <span data-lang="footer_phone">+99455 262 72 92</span>
+                </p>
+
+                <p>
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span data-lang="footer_whatsapp">WhatsApp</span>
+                </p>
+
+                <p>
+                    <i class="fa-solid fa-envelope"></i>
+                    <span data-lang="footer_email">quba.park.hotel@gmail.com</span>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                <span data-lang="footer_copyright">© 2026 Park Hotel Quba.</span>
+                <span data-lang="footer_rights">Bütün müəllif hüquqları qorunur.</span>
+            </p>
+
+            <p class="created-by">
+                <span data-lang="footer_created_by">Bu sayt</span>
+                <a href="tel:+994556256925"
+                   class="creator-name"
+                   data-phone="+994 55 625 69 25">
+                    <span data-lang="footer_creator_name">Qədirov Ceyhun</span>
+                </a>
+                <span data-lang="footer_created_by_suffix">tərəfindən yaradılmışdır.</span>
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =====================================================
+     FLATPICKR
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/az.js"></script>
+
+<script src="js/translation.js"></script>
+<script src="js/language.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
