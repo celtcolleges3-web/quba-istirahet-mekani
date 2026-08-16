@@ -1,10 +1,24 @@
 const express = require("express");
+
 const router = express.Router();
 
 const {
     createReservation
 } = require("../controllers/reservationController");
 
-router.post("/", createReservation);
+
+/* =====================================================
+   CREATE RESERVATION
+===================================================== */
+
+router.post(
+    "/",
+    createReservation
+);
+
+
+/* =====================================================
+   EXPORT ROUTER
+===================================================== */
 
 module.exports = router;

@@ -2,7 +2,7 @@ const Reservation = require("../models/Reservation");
 const axios = require("axios");
 
 /* =====================================================
-   RESERVATION NUMBER
+   GENERATE RESERVATION NUMBER
 ===================================================== */
 
 function generateReservationNumber() {
@@ -14,7 +14,7 @@ function generateReservationNumber() {
 
 
 /* =====================================================
-   TELEGRAM MESSAGE
+   SEND TELEGRAM
 ===================================================== */
 
 async function sendTelegramMessage(reservation) {
@@ -26,21 +26,13 @@ async function sendTelegramMessage(reservation) {
         process.env.TELEGRAM_CHAT_ID;
 
 
-    /* ---------------------------------------------
-       TELEGRAM CONFIG VALIDATION
-    --------------------------------------------- */
-
     if (!botToken || !chatId) {
 
         throw new Error(
-            "Telegram bot token və ya chat ID backend .env faylında yoxdur."
+            "TELEGRAM_BOT_TOKEN və ya TELEGRAM_CHAT_ID .env faylında yoxdur."
         );
     }
 
-
-    /* ---------------------------------------------
-       DATE FORMAT
-    --------------------------------------------- */
 
     const checkIn =
         new Date(reservation.checkIn)
@@ -51,12 +43,8 @@ async function sendTelegramMessage(reservation) {
             .toLocaleDateString("az-AZ");
 
 
-    /* ---------------------------------------------
-       TELEGRAM MESSAGE
-    --------------------------------------------- */
-
-    const message = `
-🏨 YENİ REZERVASİYA
+    const message =
+        `🏨 YENİ REZERVASİYA
 
 🔖 Rezervasiya №: ${reservation.reservationNumber}
 
@@ -72,66 +60,43 @@ async function sendTelegramMessage(reservation) {
 
 📅 Çıxış: ${checkOut}
 
-📌 Status: ${reservation.status}
-`;
+📌 Status: ${reservation.status}`;
 
-
-    /* ---------------------------------------------
-       TELEGRAM API
-    --------------------------------------------- */
 
     const telegramUrl =
         `https://api.telegram.org/bot${botToken}/sendMessage`;
 
 
-    try {
-
-        const response =
-            await axios.post(
-                telegramUrl,
-                {
-                    chat_id: chatId,
-                    text: message
-                },
-                {
-                    timeout: 10000
-                }
-            );
-
-
-        if (
-            !response.data ||
-            response.data.ok !== true
-        ) {
-
-            throw new Error(
-                response.data?.description ||
-                "Telegram mesajı göndərilmədi."
-            );
-        }
-
-
-        console.log(
-            "Telegram notification sent successfully."
+    const response =
+        await axios.post(
+            telegramUrl,
+            {
+                chat_id: chatId,
+                text: message
+            },
+            {
+                timeout: 10000
+            }
         );
 
 
-        return true;
-
-    } catch (error) {
-
-        console.error(
-            "Telegram API error:",
-            error.response?.data ||
-            error.message
-        );
+    if (
+        !response.data ||
+        response.data.ok !== true
+    ) {
 
         throw new Error(
-            error.response?.data?.description ||
-            error.message ||
-            "Telegram mesajı göndərilə bilmədi."
+            response.data?.description ||
+            "Telegram mesajı göndərilmədi."
         );
     }
+
+
+    console.log(
+        "Telegram notification sent successfully."
+    );
+
+    return true;
 }
 
 
@@ -141,9 +106,11 @@ async function sendTelegramMessage(reservation) {
 
 const createReservation = async (req, res) => {
 
-    let reservation = null;
-
     try {
+
+        /* =================================================
+           READ REQUEST
+        ================================================= */
 
         const {
             guestName,
@@ -156,15 +123,25 @@ const createReservation = async (req, res) => {
         } = req.body;
 
 
-        /* ---------------------------------------------
-           VALIDATION
-        --------------------------------------------- */
+        console.log(
+            "RESERVATION REQUEST:",
+            req.body
+        );
+
+
+        /* =================================================
+           REQUIRED FIELD VALIDATION
+        ================================================= */
 
         if (
             !guestName ||
+            !String(guestName).trim() ||
             !phone ||
+            !String(phone).trim() ||
             !roomType ||
-            !guestCount ||
+            !String(roomType).trim() ||
+            guestCount === undefined ||
+            guestCount === null ||
             !checkIn ||
             !checkOut
         ) {
@@ -179,9 +156,9 @@ const createReservation = async (req, res) => {
         }
 
 
-        /* ---------------------------------------------
-           GUEST COUNT VALIDATION
-        --------------------------------------------- */
+        /* =================================================
+           GUEST COUNT
+        ================================================= */
 
         const parsedGuestCount =
             Number(guestCount);
@@ -202,9 +179,9 @@ const createReservation = async (req, res) => {
         }
 
 
-        /* ---------------------------------------------
-           DATE VALIDATION
-        --------------------------------------------- */
+        /* =================================================
+           DATE
+        ================================================= */
 
         const checkInDate =
             new Date(checkIn);
@@ -228,6 +205,10 @@ const createReservation = async (req, res) => {
         }
 
 
+        /* =================================================
+           DATE ORDER
+        ================================================= */
+
         if (checkOutDate <= checkInDate) {
 
             return res.status(400).json({
@@ -240,24 +221,24 @@ const createReservation = async (req, res) => {
         }
 
 
-        /* ---------------------------------------------
-           CREATE CONFIRMED RESERVATION
-        --------------------------------------------- */
+        /* =================================================
+           CREATE MONGODB RESERVATION
+        ================================================= */
 
-        reservation =
+        const reservation =
             await Reservation.create({
 
                 reservationNumber:
                     generateReservationNumber(),
 
                 guestName:
-                    guestName.trim(),
+                    String(guestName).trim(),
 
                 phone:
-                    phone.trim(),
+                    String(phone).trim(),
 
                 roomType:
-                    roomType.trim(),
+                    String(roomType).trim(),
 
                 guestCount:
                 parsedGuestCount,
@@ -273,67 +254,29 @@ const createReservation = async (req, res) => {
                         ? String(specialRequest).trim()
                         : "",
 
-                /*
-                 * IMPORTANT:
-                 * User pressed CONFIRM,
-                 * therefore reservation is CONFIRMED.
-                 */
-                status: "Confirmed"
+                status:
+                    "Confirmed"
             });
 
 
         console.log(
-            `Reservation created: ${reservation.reservationNumber}`
+            "RESERVATION CREATED:",
+            reservation.reservationNumber
         );
 
 
-        /* ---------------------------------------------
-           SEND TELEGRAM
-        --------------------------------------------- */
+        /* =================================================
+           TELEGRAM
+        ================================================= */
 
-        try {
-
-            await sendTelegramMessage(
-                reservation
-            );
-
-        } catch (telegramError) {
-
-            console.error(
-                "Telegram notification failed:",
-                telegramError.message
-            );
+        await sendTelegramMessage(
+            reservation
+        );
 
 
-            /*
-             * IMPORTANT:
-             *
-             * Telegram göndərilməyibsə frontend-ə
-             * success qaytarmırıq.
-             *
-             * Reservation MongoDB-də saxlanılır ki,
-             * məlumat itməsin.
-             */
-
-            return res.status(502).json({
-
-                success: false,
-
-                message:
-                    "Rezervasiya yaradıldı, lakin Telegram bildirişi göndərilmədi. Zəhmət olmasa yenidən cəhd edin və ya administratorla əlaqə saxlayın.",
-
-                telegramError:
-                telegramError.message,
-
-                reservationId:
-                reservation._id
-            });
-        }
-
-
-        /* ---------------------------------------------
-           FINAL SUCCESS RESPONSE
-        --------------------------------------------- */
+        /* =================================================
+           SUCCESS
+        ================================================= */
 
         return res.status(201).json({
 
@@ -343,6 +286,7 @@ const createReservation = async (req, res) => {
                 "Rezervasiya uğurla təsdiqləndi.",
 
             reservation: {
+
                 id:
                 reservation._id,
 
@@ -367,19 +311,48 @@ const createReservation = async (req, res) => {
                 checkOut:
                 reservation.checkOut,
 
+                specialRequest:
+                reservation.specialRequest,
+
                 status:
                 reservation.status
             }
-
         });
 
     } catch (error) {
 
         console.error(
-            "Reservation error:",
+            "CREATE RESERVATION ERROR:",
             error
         );
 
+
+        /* =================================================
+           TELEGRAM ERROR
+        ================================================= */
+
+        if (
+            error.response &&
+            error.response.data &&
+            error.response.data.description
+        ) {
+
+            return res.status(502).json({
+
+                success: false,
+
+                message:
+                    "Rezervasiya yaradıldı, lakin Telegram bildirişi göndərilmədi.",
+
+                error:
+                error.response.data.description
+            });
+        }
+
+
+        /* =================================================
+           MONGODB / SERVER ERROR
+        ================================================= */
 
         return res.status(500).json({
 
